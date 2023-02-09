@@ -37,7 +37,7 @@ import history from "../history";
 
 //Get current user's profile
 export const getCurrentProfile = (user) => async (dispatch, getState) => {
-  const response = await axios.get(`http://localhost:5000/api/profile/me/`);
+  const response = await axios.get(`https://musicaly-server.onrender.com/api/profile/me/`);
 
   dispatch({ type: GET_PROFILE, payload: response.data });
 };
@@ -47,7 +47,7 @@ export const getProfiles = () => async dispatch => {
   //Clear what ever is in the current user's profile
   dispatch({ type: CLEAR_PROFILE });
 
-  const response = await axios.get("http://localhost:5000/api/profile");
+  const response = await axios.get("https://musicaly-server.onrender.com/api/profile");
   
   dispatch({ type: GET_PROFILES, payload: response.data });
 };
@@ -55,7 +55,7 @@ export const getProfiles = () => async dispatch => {
 
 //Get profile by ID
 export const getProfileById = userId => async dispatch => {
-  const response = await axios.get(`http://localhost:5000/api/profile/user/${userId}`);
+  const response = await axios.get(`https://musicaly-server.onrender.com/api/profile/user/${userId}`);
 
   dispatch({ type: GET_PROFILE, payload: response.data });
 };
@@ -66,7 +66,7 @@ export const createProfile = ( formData, history, edit=false ) => async (dispatc
   const user_id = getState().auth.user.id;
   // image upload logic
   if (formData.image) {
-    const uploadConfig = await axios.get('http://localhost:5000/api/upload');
+    const uploadConfig = await axios.get('https://musicaly-server.onrender.com/api/upload');
     await axios.put(uploadConfig.data.url, formData.image, {
       headers: {
         'Content-Type': formData.image.type
@@ -80,7 +80,7 @@ export const createProfile = ( formData, history, edit=false ) => async (dispatc
       "Content-Type": "application/json"
     }
   };
-  const response = await axios.post("http://localhost:5000/api/profile", {...formData, user_id}, config);
+  const response = await axios.post("https://musicaly-server.onrender.com/api/profile", {...formData, user_id}, config);
   dispatch({ type: GET_PROFILE, payload: response.data });
   dispatch(setAlert(edit ? "Profile Updated": "Profile Created", "success"));
 
@@ -96,7 +96,7 @@ export const addExperience = (formData, history) => async dispatch => {
     }
   };
 
-  const response = await axios.patch("http://localhost:5000/api/profile/experience", formData, config);
+  const response = await axios.patch("https://musicaly-server.onrender.com/api/profile/experience", formData, config);
   dispatch({ type: UPDATE_PROFILE, payload: response.data });
   dispatch(setAlert("Experience Added", "success"));
   history.push("./dashboard")
@@ -112,7 +112,7 @@ export const addEducation = (formData, history) => async dispatch => {
   };
 
   // Patch request to API/PROFILE
-  const response = await axios.patch("http://localhost:5000/api/profile/education", formData, config);
+  const response = await axios.patch("https://musicaly-server.onrender.com/api/profile/education", formData, config);
 
   dispatch({ type: UPDATE_PROFILE, payload: response.data });
   dispatch(setAlert("Education Added", "success"));
@@ -131,7 +131,7 @@ export const deleteAccount = () => async dispatch => {
       "Are you sure you want to delete your account?"
     )
   ) {
-    await axios.delete(`http://localhost:5000/api/profile/`);
+    await axios.delete(`https://musicaly-server.onrender.com/api/profile/`);
 
     dispatch({ type: CLEAR_PROFILE });
     dispatch({ type: ACCOUNT_DELETED});
@@ -165,14 +165,14 @@ export const setAlert = (msg, alertType, timeout = 5000) => dispatch => {
 
 //Get chat rooms
 export const getChats = () => async dispatch => {
-  const response = await axios.get("http://localhost:5000/api/chats");
+  const response = await axios.get("https://musicaly-server.onrender.com/api/chats");
 
   dispatch({ type: GET_CHATS, payload: response.data });
 }
 
 //Get chat 
 export const getChat = room_id => async dispatch => {
-  const response = await axios.get(`http://localhost:5000/api/chats/${room_id}`);
+  const response = await axios.get(`https://musicaly-server.onrender.com/api/chats/${room_id}`);
 
   dispatch({ type: GET_MESSAGES, payload: response.data.messages });
   dispatch({ type: GET_CHAT, payload: response.data.room });
@@ -185,7 +185,7 @@ export const createChat = (formData) => async (dispatch) => {
       "Content-Type": "application/json"
     }
   }
-  const response = await axios.post(`http://localhost:5000/api/chats/`, formData, config);
+  const response = await axios.post(`https://musicaly-server.onrender.com/api/chats/`, formData, config);
 
   dispatch({ type: ADD_CHAT, payload: response.data });
 
@@ -196,7 +196,7 @@ export const createChat = (formData) => async (dispatch) => {
 
 //Delete chat room
 export const deleteChat = room_id => async dispatch => {
-  await axios.delete(`http://localhost:5000/api/chats/${room_id}`);
+  await axios.delete(`https://musicaly-server.onrender.com/api/chats/${room_id}`);
 
 
   dispatch({ type: REMOVE_CHAT, payload: room_id });
@@ -210,7 +210,7 @@ export const addMessage = (formData) => async (dispatch) => {
       "Content-Type": "application/json"
     }
   }
-  const response = await axios.post(`http://localhost:5000/api/chats/message`, formData, config);
+  const response = await axios.post(`https://musicaly-server.onrender.com/api/chats/message`, formData, config);
 
   dispatch({ type: ADD_MESSAGE, payload: response.data });
 };
@@ -221,7 +221,7 @@ export const dispatchMessageAddition = message => dispatch => {
 
 //Delete a message
 export const deleteMessage = message_id => async dispatch => {
-  await axios.delete(`http://localhost:5000/api/chats/message/${message_id}`);
+  await axios.delete(`https://musicaly-server.onrender.com/api/chats/message/${message_id}`);
   dispatch({ type: REMOVE_MESSAGE, payload: message_id });
 };
 
@@ -236,7 +236,7 @@ export const dispatchMessageDelete = message_id => dispatch => {
 
 //Get posts
 export const getPosts = () => async dispatch => {
-  const response = await axios.get("http://localhost:5000/api/posts");
+  const response = await axios.get("https://musicaly-server.onrender.com/api/posts");
 
   dispatch({ type: GET_POSTS, payload: response.data });
 }
@@ -244,7 +244,7 @@ export const getPosts = () => async dispatch => {
 
 //Add a like to a discussion
 export const addLike = post_id => async dispatch => {
-  const response = await axios.patch(`http://localhost:5000/api/posts/like/${post_id}`);
+  const response = await axios.patch(`https://musicaly-server.onrender.com/api/posts/like/${post_id}`);
 
   dispatch({ type: UPDATE_LIKES, payload: { post_id, likes: response.data }});
 }
@@ -252,7 +252,7 @@ export const addLike = post_id => async dispatch => {
 
 //Remove a like to a discussion
 export const removeLike = post_id => async dispatch => {
-  const response = await axios.patch(`http://localhost:5000/api/posts/unlike/${post_id}`);
+  const response = await axios.patch(`https://musicaly-server.onrender.com/api/posts/unlike/${post_id}`);
 
   dispatch({ type: UPDATE_LIKES, payload: {post_id, likes: response.data }});
 };
@@ -260,7 +260,7 @@ export const removeLike = post_id => async dispatch => {
 
 //Delete a post
 export const deletePost = post_id => async dispatch => {
-  await axios.delete(`http://localhost:5000/api/posts/${post_id}`);
+  await axios.delete(`https://musicaly-server.onrender.com/api/posts/${post_id}`);
 
   dispatch({ type: DELETE_POST, payload: post_id });
   dispatch(setAlert("Post has been deleted.", "success"));
@@ -275,7 +275,7 @@ export const addPost = formData => async (dispatch, getState) => {
       "Content-Type": "application/json"
     }
   }
-  const response = await axios.post("http://localhost:5000/api/posts/", {...formData, ...user}, config);
+  const response = await axios.post("https://musicaly-server.onrender.com/api/posts/", {...formData, ...user}, config);
   dispatch({ type: ADD_POST, payload: response.data });
   dispatch(setAlert("Post created", "success"));
 };
@@ -283,14 +283,14 @@ export const addPost = formData => async (dispatch, getState) => {
 
 //Get post
 export const getPost = id => async dispatch => {
-  const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
+  const response = await axios.get(`https://musicaly-server.onrender.com/api/posts/${id}`);
 
   dispatch({ type: GET_POST, payload: response.data });
 }
 
 //Get posts
 export const getComments = (post_id) => async dispatch => {
-  const response = await axios.get(`http://localhost:5000/api/posts/comments/${post_id}`);  
+  const response = await axios.get(`https://musicaly-server.onrender.com/api/posts/comments/${post_id}`);  
 
   dispatch({ type: GET_COMMENTS, payload: response.data });
 }
@@ -304,7 +304,7 @@ export const addComment = (postId, formData) => async (dispatch, getState) => {
       "Content-Type": "application/json"
     }
   }
-  const response = await axios.post(`http://localhost:5000/api/posts/comment/${postId}`, {...user, ...formData, postId}, config);
+  const response = await axios.post(`https://musicaly-server.onrender.com/api/posts/comment/${postId}`, {...user, ...formData, postId}, config);
 
   dispatch({ type: ADD_COMMENT, payload: response.data });
   dispatch(setAlert("Comment Added", "Success"));
@@ -313,7 +313,7 @@ export const addComment = (postId, formData) => async (dispatch, getState) => {
 
 //Delete a comment
 export const deleteComment = (post_id, comm_id) => async dispatch => {
-  await axios.delete(`http://localhost:5000/api/posts/comment/${post_id}/${comm_id}`);
+  await axios.delete(`https://musicaly-server.onrender.com/api/posts/comment/${post_id}/${comm_id}`);
 
   dispatch({ type: REMOVE_COMMENT, payload: comm_id });
   dispatch(setAlert("Comment Removed", "danger"))
@@ -331,7 +331,7 @@ export const loadUser = () => async dispatch => {
     setAuthToken(localStorage.token);
   }
 
-  const response = await axios.get("http://localhost:5000/api/auth");
+  const response = await axios.get("https://musicaly-server.onrender.com/api/auth");
 
 
   dispatch({ type: USER_LOADED, payload: response.data });
@@ -346,7 +346,7 @@ export const register = ({ name, email, password }) => async dispatch => {
   }
   const body = JSON.stringify({ name, email, password });
 
-  const response = await axios.post("http://localhost:5000/api/users", body, config);
+  const response = await axios.post("https://musicaly-server.onrender.com/api/users", body, config);
 
   dispatch({ type: REGISTER_SUCCESS, payload: response.data });
   dispatch(loadUser());
@@ -363,7 +363,7 @@ export const login = (email, password) => async dispatch => {
 
   const body = JSON.stringify({ email, password });
 
-  const response = await axios.post("http://localhost:5000/api/auth", body, config);
+  const response = await axios.post("https://musicaly-server.onrender.com/api/auth", body, config);
   dispatch({ type: LOGIN_SUCCESS, payload: response.data });
   dispatch(loadUser());
 }

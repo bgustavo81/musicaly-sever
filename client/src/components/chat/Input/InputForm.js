@@ -8,7 +8,7 @@ import './InputForm.css';
 
 const InputForm = ({ addMessage, dispatchMessageAddition, room_id, match }) => {
   const [message, setMessage] = useState("");
-  const ENDPOINT = 'http://localhost:5000/';
+  const ENDPOINT = 'https://musicaly-server.onrender.com';
 
   useEffect(() => {
     const socket = openSocket(ENDPOINT);
