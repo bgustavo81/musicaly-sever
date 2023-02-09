@@ -65,7 +65,7 @@ router.post(
       //Expiration date extreme for testing purposes
       jwt.sign(
         payload,
-        keys.jwtSecret,
+        process.env.jwtSecret,
         {
           expiresIn: 36000000
         },
