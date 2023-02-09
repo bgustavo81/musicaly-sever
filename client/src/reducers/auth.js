@@ -30,6 +30,13 @@ export default function(state = initialState, action) {
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false,
+        user: null
+      };
     case ACCOUNT_DELETED:
       localStorage.removeItem("token");
       return {
