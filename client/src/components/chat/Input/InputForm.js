@@ -8,15 +8,13 @@ import './InputForm.css';
 
 const InputForm = ({ addMessage, dispatchMessageAddition, room_id, match }) => {
   const [message, setMessage] = useState("");
-  const ENDPOINT = 'https://musical-app.herokuapp.com/';
+  const ENDPOINT = 'http://localhost:5000/';
 
   useEffect(() => {
     const socket = openSocket(ENDPOINT);
     socket.on('messages', data => {
       const room_id = parseInt(match.params.room_id);
-      console.log(data);
-      console.log(data.action === 'create')
-      console.log(data.message.room_id === room_id);
+
       if (data.action === 'create' && data.message.room_id === room_id) {
 
         dispatchMessageAddition(data.message);

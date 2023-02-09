@@ -42,7 +42,7 @@ module.exports = class Chats {
 
     static getChatRoomsByUser(user_id) {
         return pool.query(
-            `SELECT * FROM rooms WHERE (admin = $1 OR recipient = $1) ORDER BY joined_at DESC`,
+            `SELECT * FROM rooms WHERE (admin = $1 OR recipient = $1) ORDER BY created_at DESC`,
             [user_id]
         );
     };
@@ -54,6 +54,15 @@ module.exports = class Chats {
         );
     };
 
+    static deleteRoomByAuthor(user_id) {
+        return pool.query(
+            `DELETE FROM rooms WHERE (admin = $1 OR recipient = $1)`,
+            [user_id]
+        );
+    };
+
+
+    // queries for the chats table
     static getLatestMessageByUser(user_id) {
         return pool.query(
             `SELECT * FROM chats WHERE user_id = $1 ORDER BY created_at DESC LIMIT 1`,
@@ -96,11 +105,6 @@ module.exports = class Chats {
         );
     };
 
-    static deleteRoomByAuthor(user_id) {
-        return pool.query(
-            `DELETE FROM rooms WHERE (admin = $1 OR recipient = $1)`,
-            [user_id]
-        );
-    };
+x
 }
 

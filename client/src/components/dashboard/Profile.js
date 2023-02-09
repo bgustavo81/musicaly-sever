@@ -11,6 +11,7 @@ const Profile = ({
         <Fragment>
         <h2 className="my-2 text-center">Current Profile</h2>
         <div className="table center-div">
+        <div>
         <thead>
           <tr>
             <th>Name:</th>
@@ -90,6 +91,7 @@ const Profile = ({
             <td>{profile.bandcamp !== "" ? <i class="fas fa-check text-primary"/>: <i class="fas fa-circle text-primary"/>}</td>
           </tr>
         </tbody>
+        </div>
       </div>
       </Fragment>
       ):(

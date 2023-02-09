@@ -129,7 +129,9 @@ img {
 .center-div {
   position: relative;
   margin: 0 auto;
-  width: 60%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .btn {

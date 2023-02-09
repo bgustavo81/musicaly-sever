@@ -16,7 +16,7 @@ const Message = ({
 }) => {
   let isSentByCurrentUser = false;
   const [displayDropdown, toggleDropdown] = useState(false);
-  const ENDPOINT = 'https://musical-app.herokuapp.com/';
+  const ENDPOINT = 'http://localhost:5000/';
 
   useEffect(() => {
     const socket = openSocket(ENDPOINT);

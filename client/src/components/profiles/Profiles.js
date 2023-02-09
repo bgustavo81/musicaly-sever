@@ -9,17 +9,13 @@ const Profiles = ({ getProfiles, profile: { profiles, loading }, auth: {user} })
   useEffect(() => {
     getProfiles();
   }, [getProfiles]);
-
-  console.log(profiles);
-  console.log(loading);
-  console.log(user);
+ 
 
   if (!profiles) {
     return
   }
 
-  console.log(profiles);
-
+ 
   return (
     <Fragment>
       {loading && !profiles ? (

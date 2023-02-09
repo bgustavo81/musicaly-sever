@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const PORT = process.env.PORT || 5005;
+const PORT = process.env.PORT || 5000;
 
 let server = app.listen(PORT);
 const io = require('./socket').init(server);

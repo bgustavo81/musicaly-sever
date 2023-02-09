@@ -1,5 +1,7 @@
 const keys = require('../config/keys');
 const { Pool } = require('pg');
+
+
 const pool = new Pool({
     user: keys.pgUser,
     host: keys.pgHost,
@@ -8,6 +10,7 @@ const pool = new Pool({
     port: 5432,
     ssl: true
 });
+
 
 pool.connect()
     .then(() => console.log("Connected Successfully!"))

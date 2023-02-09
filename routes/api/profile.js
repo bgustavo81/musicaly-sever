@@ -160,7 +160,6 @@ router.get("/user/:user_id", async (req, res) => {
 //@access Private
 router.delete("/", auth, async (req, res) => {
   let author = req.user.id;
-  console.log(author);
   try {
     //Remove user's posts
     await Post.deletePostsByAuthor(author);

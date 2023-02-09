@@ -28,7 +28,7 @@ const EditProfile = ({
     years_playing: "",
   });
 
-  console.log(profile)
+  
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
@@ -53,7 +53,7 @@ const EditProfile = ({
       instagram: loading || !profile.instagram ? "" : profile.instagram,
       bandcamp: loading || !profile.bandcamp ? "" : profile.bandcamp,
     });
-    console.log(profile);
+
   }, [loading, getCurrentProfile]);
 
   const {

@@ -21,7 +21,7 @@ const ProfileItem = ({
     <div className="profile bg-light">
       {image ? (
         <>
-        <img src={'https://foto-bucket-12345.s3.us-east-2.amazonaws.com/' + image} alt="" className="round-img" />
+        <img src={'https://my-foto-bucket-123.s3.us-east-2.amazonaws.com/' + image} alt="" className="round-img" />
         </>
       ) : (
         <img src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'} alt="" className="round-img" />

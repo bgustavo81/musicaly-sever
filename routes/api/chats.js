@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const Chats = require("../../models/chats");
+const io = require('../../socket');
+
 
 
 //@route POST api/chats
@@ -29,7 +31,6 @@ router.post("/", auth, async(req, res) => {
         }
         res.status(200).json(room.rows[0]);
     } catch (err) {
-        console.log(err.message);
         res.status(500).send("Server error in chats.js")
     }
 });
@@ -53,7 +54,6 @@ router.get(
                 messages: messages.rows,
             });
         } catch (err) {
-            console.log(err.message);
             res.status(500).send("Server error in Chats.js");
         }
 });
@@ -68,7 +68,6 @@ router.get(
             let rooms = await Chats.getChatRoomsByUser(req.user.id);
             res.status(200).json(rooms.rows);
         } catch (err) {
-            console.log(err.message);
             res.status(500).send("Server error in Chats.js");
         }
     }
@@ -87,12 +86,10 @@ router.delete(
             let room = await Chats.getChatRoomByRoomId(req.user.id, room_id)
             
             if (room.rows.length === 0) {
-                console.log("error")
                 return res.status(404).json({ msg: "room not found" });
             }
             //Make sure user is deleting his own rooms
             if (room.rows[0].admin !== req.user.id) {
-                console.log("unauthorized")
                 return res
                 .status(401)
                 .json({ msg: "User not authorized to delete this room" });
@@ -101,7 +98,6 @@ router.delete(
             room = await Chats.deleteChatRoomByIdAndAdmin(room_id, req.user.id);
             res.status(200).json({msg: "Chat room deleted"});
         } catch (err) {
-            console.log(err.message);
             res.status(500).send("Server error in Chats.js");
         }
     }
@@ -148,9 +144,10 @@ router.delete( "/message/:message_id", auth,
           }
         await Chats.deleteMessageByMessageId(req.params.message_id);
         // emit the new message_id
-        io.getIO().io.on('connection', (socket) => {
-            socket.broadcast.emit('messages', { action: 'delete', message_id: req.params.message_id })            
-        });
+        // io.getIO().io.on('connection', (socket) => {
+        //     socket.broadcast.emit('messages', { action: 'delete', message_id: req.params.message_id })            
+        // });
+        io.getIO().emit('messages', { action: 'delete', message_id: req.params.message_id });
         res.status(200).json({msg: "Message was deleted"});
       } catch (err) {
         console.error(err.message);

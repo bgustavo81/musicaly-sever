@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const AWS = require('aws-sdk');
-const uuid = require('uuid/v1')
+const { v4: uuidv4 } = require('uuid');
 const auth = require("../../middleware/auth");
 const keys = require('../../config/keys');
 
@@ -15,10 +15,10 @@ const s3 = new AWS.S3({
 })
 
 router.get('/', auth, (req, res, next) => {
-    const key = `${req.user.id}/${uuid()}.jpeg`;
+    const key = `${req.user.id}/${uuidv4()}.jpeg`;
 
     s3.getSignedUrl('putObject', {
-        Bucket: 'foto-bucket-12345',
+        Bucket: 'my-foto-bucket-123',
         ContentType: 'image/jpeg',
         Key: key
     }, (err, url) => res.send({ key, url }));
